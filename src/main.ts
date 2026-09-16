@@ -28,17 +28,18 @@ import '@ionic/vue/css/display.css';
  */
 
 /* @import '@ionic/vue/css/palettes/dark.always.css'; */
-/* @import '@ionic/vue/css/palettes/dark.class.css'; */
-import '@ionic/vue/css/palettes/dark.system.css';
+import '@ionic/vue/css/palettes/dark.class.css';
 
 /* Theme variables */
 import './theme/variables.css';
 import './theme/app.css';
+import './theme/features.css';
+import { applyTheme, getSavedTheme } from './services/settings';
 
 const app = createApp(App)
   .use(IonicVue)
   .use(router);
 
-router.isReady().then(() => {
+getSavedTheme().then(applyTheme).catch(() => applyTheme('light')).finally(() => router.isReady().then(() => {
   app.mount('#app');
-});
+}));

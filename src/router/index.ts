@@ -8,7 +8,18 @@ const routes: Array<RouteRecordRaw> = [
   },
   { path: '/login', component: () => import('@/views/LoginPage.vue'), meta: { guest: true } },
   { path: '/cadastro', component: () => import('@/views/RegisterPage.vue'), meta: { guest: true } },
-  { path: '/home', component: () => import('@/views/HomePage.vue'), meta: { requiresAuth: true } },
+  { path: '/home', redirect: '/tabs/tab1' },
+  {
+    path: '/tabs/',
+    component: () => import('@/views/TabsPage.vue'),
+    meta: { requiresAuth: true },
+    children: [
+      { path: '', redirect: '/tabs/tab1' },
+      { path: 'tab1', component: () => import('@/views/Tab1Page.vue') },
+      { path: 'tab2', component: () => import('@/views/Tab2Page.vue') },
+      { path: 'tab3', component: () => import('@/views/Tab3Page.vue') }
+    ]
+  },
   { path: '/sobre', component: () => import('@/views/AboutPage.vue'), meta: { requiresAuth: true } },
   { path: '/:pathMatch(.*)*', redirect: '/login' }
 ]
